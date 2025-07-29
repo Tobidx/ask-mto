@@ -1,5 +1,6 @@
 [build]
 builder = "NIXPACKS"
+buildCommand = "pip install -r ask-mto-genai/requirements.txt"
 
 [deploy]
 startCommand = "python3 start_railway.py"
