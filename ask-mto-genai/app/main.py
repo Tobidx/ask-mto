@@ -75,7 +75,7 @@ fallback_chain = LLMChain(
 )
 
 # ─── FastAPI setup ──────────────────────────────────────────────────────────────
-app = FastAPI()
+app = FastAPI(title="Ask MTO API", description="Ontario MTO Driver's Handbook Assistant")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=config.CORS_ORIGINS,
@@ -83,6 +83,15 @@ app.add_middleware(
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
+
+# Health check endpoints
+@app.get("/")
+async def root():
+    return {"message": "Ask MTO API is running!", "status": "healthy"}
+
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy", "service": "ask-mto-api"}
 
 class Question(BaseModel):
     question: str
