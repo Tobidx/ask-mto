@@ -49,8 +49,8 @@ def main():
         port = os.environ.get('PORT', '8000')
         print(f"Starting server on port {port}")
         
-        # Start uvicorn
-        cmd = [sys.executable, '-m', 'uvicorn', 'app.main:app', '--host', '0.0.0.0', '--port', str(port)]
+        # Start uvicorn using python3 explicitly
+        cmd = ['python3', '-m', 'uvicorn', 'app.main:app', '--host', '0.0.0.0', '--port', str(port)]
         
         print(f"Executing command: {' '.join(cmd)}")
         print("=" * 50)
