@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "ask-mto-genai/ask-mto-ui/package.json",
+      "src": "package.json",
       "use": "@vercel/next"
     },
     {
@@ -17,8 +17,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "ask-mto-genai/ask-mto-ui/$1"
+      "dest": "/$1"
     }
-  ],
-  "outputDirectory": "ask-mto-genai/ask-mto-ui/.next"
+  ]
 } 
