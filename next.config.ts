@@ -1,16 +1,17 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Remove static export for Vercel - we want SSR capabilities
-  trailingSlash: false,
+  // Configure for static deployment to Vercel (frontend only)
+  output: 'export',
+  trailingSlash: true,
   images: {
     unoptimized: true,
   },
-  // Remove basePath and assetPrefix for Vercel deployment
   env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || '/api',
+    // Railway backend URL will be set as environment variable
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
   },
-  // Optimize for Vercel
+  // Optimize for production
   poweredByHeader: false,
   generateEtags: false,
   compress: true,

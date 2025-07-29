@@ -3,6 +3,7 @@ langchain-community
 langchain-openai
 fastapi
 python-dotenv
+uvicorn
 pydantic
 faiss-cpu
 tiktoken
@@ -20,6 +21,7 @@ ragas
 datasets
 opencensus-ext-azure
 opencensus-ext-requests
+opencensus-ext-fastapi
 semantic-kernel
 azure-search-documents
 azure-identity

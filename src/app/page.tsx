@@ -56,8 +56,9 @@ export default function Home() {
     setIsLoading(true)
 
     try {
-      // Use Vercel API route instead of localhost
-      const response = await fetch('/api/ask', {
+      // Use Railway backend URL
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+      const response = await fetch(`${apiUrl}/ask`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
