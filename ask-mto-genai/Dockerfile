@@ -1,11 +1,12 @@
 # Use Python 3.11 slim image
 FROM python:3.11-slim
 
-# Install system dependencies required for FAISS
+# Install system dependencies required for FAISS and healthchecks
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     build-essential \
-    libopenblas-dev && \
+    libopenblas-dev \
+    curl && \
     rm -rf /var/lib/apt/lists/*
 
 # Set working directory
