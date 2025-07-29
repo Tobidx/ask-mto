@@ -17,7 +17,8 @@ from langchain_core.prompts import PromptTemplate
 
 from app.config import config
 from app.cosmosdb import store_session
-from app.eval_ragas import evaluate_single_qa
+# NOTE: Removed evaluation endpoint to reduce image size
+# from app.eval_ragas import evaluate_single_qa
 from app.monitoring import track_request, track_rag_performance, log_info, log_error
 from app.semantic_kernel import enhance_answer, suggest_followups, store_conversation
 
@@ -218,53 +219,57 @@ async def clear_context():
     conversation_context["last_answer"] = ""
     return {"message": "Conversation context cleared"}
 
-@app.post("/evaluate")
-@track_request("/evaluate", "POST")
-async def evaluate_answer(query: Question):
-    """Evaluate the RAG system's answer using RAGAS metrics"""
-    try:
-        rag = RAGComponents.get_instance()
-        # Get answer from RAG system
-        enhanced_question = query.question
-        if any(word in query.question.lower() for word in ["what should i do then", "what should i do", "then what", "what then", "alternatives", "instead"]):
-            if conversation_context["last_question"] and conversation_context["last_answer"]:
-                enhanced_question = f"Previous question: {conversation_context['last_question']}\\nPrevious answer: {conversation_context['last_answer']}\\nFollow-up question: {query.question}"
-
-        resp = rag.qa_chain({"query": enhanced_question})
-        answer = resp["result"].strip()
-        docs = resp["source_documents"]
-
-        # Prepare contexts for evaluation
-        contexts = [d.page_content for d in docs[:3]]
-
-        # Run RAGAS evaluation
-        evaluation = evaluate_single_qa(
-            question=query.question,
-            answer=answer,
-            contexts=contexts
-        )
-
-        return {
-            "question": query.question,
-            "answer": answer,
-            "sources": contexts,
-            "evaluation": evaluation
-        }
-
-    except Exception as e:
-        return {
-            "error": f"Evaluation failed: {str(e)}",
-            "question": query.question,
-            "answer": "",
-            "sources": [],
-            "evaluation": {
-                "context_relevancy": 0.0,
-                "answer_relevancy": 0.0,
-                "faithfulness": 0.0,
-                "context_recall": 0.0,
-                "overall_score": 0.0
-                         }
-         }
+# NOTE: /evaluate endpoint removed to reduce production image size.
+# This endpoint relies on heavy dependencies (ragas, datasets) that are not
+# suitable for a lean production environment. This functionality should be
+# run in a separate development/evaluation environment.
+# @app.post("/evaluate")
+# @track_request("/evaluate", "POST")
+# async def evaluate_answer(query: Question):
+#     """Evaluate the RAG system's answer using RAGAS metrics"""
+#     try:
+#         rag = RAGComponents.get_instance()
+#         # Get answer from RAG system
+#         enhanced_question = query.question
+#         if any(word in query.question.lower() for word in ["what should i do then", "what should i do", "then what", "what then", "alternatives", "instead"]):
+#             if conversation_context["last_question"] and conversation_context["last_answer"]:
+#                 enhanced_question = f"Previous question: {conversation_context['last_question']}\\nPrevious answer: {conversation_context['last_answer']}\\nFollow-up question: {query.question}"
+#
+#         resp = rag.qa_chain({"query": enhanced_question})
+#         answer = resp["result"].strip()
+#         docs = resp["source_documents"]
+#
+#         # Prepare contexts for evaluation
+#         contexts = [d.page_content for d in docs[:3]]
+#
+#         # Run RAGAS evaluation
+#         evaluation = evaluate_single_qa(
+#             question=query.question,
+#             answer=answer,
+#             contexts=contexts
+#         )
+#
+#         return {
+#             "question": query.question,
+#             "answer": answer,
+#             "sources": contexts,
+#             "evaluation": evaluation
+#         }
+#
+#     except Exception as e:
+#         return {
+#             "error": f"Evaluation failed: {str(e)}",
+#             "question": query.question,
+#             "answer": "",
+#             "sources": [],
+#             "evaluation": {
+#                 "context_relevancy": 0.0,
+#                 "answer_relevancy": 0.0,
+#                 "faithfulness": 0.0,
+#                 "context_recall": 0.0,
+#                 "overall_score": 0.0
+#                          }
+#          }
 
 @app.post("/ask-enhanced")
 @track_request("/ask-enhanced", "POST")
