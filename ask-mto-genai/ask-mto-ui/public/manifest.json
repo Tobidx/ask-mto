@@ -1,0 +1,43 @@
+{
+  "name": "Ask MTO - Ontario Driver's Licensing Assistant",
+  "short_name": "Ask MTO",
+  "description": "Get answers about Ontario G1 and G2 driver's licensing requirements, powered by AI and the official MTO Driver's Handbook",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1e40af",
+  "theme_color": "#2563eb",
+  "orientation": "portrait-primary",
+  "categories": ["education", "reference", "utilities"],
+  "lang": "en-US",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icon-512.png", 
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "G1 License Info",
+      "short_name": "G1 Info",
+      "description": "Get information about G1 license requirements",
+      "url": "/?q=g1",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "G2 License Info", 
+      "short_name": "G2 Info",
+      "description": "Get information about G2 license requirements",
+      "url": "/?q=g2",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+} 
