@@ -8,9 +8,17 @@ uvicorn
 pydantic
 faiss-cpu
 tiktoken
-PyYAML>=6.0.1  # Explicitly specify PyYAML with version
+PyYAML>=6.0.1
 numpy
 openai
+
+# Azure Core SDKs
+azure-core
+azure-identity
+azure-cosmos>=4.5.1  # Add Cosmos DB SDK
+azure-search-documents
+azure-cognitiveservices-language-textanalytics
+azure-ai-ml
 
 # Monitoring
 opencensus-ext-azure
@@ -18,11 +26,4 @@ opencensus-ext-requests
 opencensus-ext-fastapi
 
 # Semantic Kernel
-semantic-kernel
-
-# Azure
-azure-search-documents
-azure-identity
-azure-ai-ml
-azure-cognitiveservices-language-textanalytics
-azure-core 
+semantic-kernel 

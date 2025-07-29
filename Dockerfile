@@ -20,13 +20,19 @@ RUN pip install --no-cache-dir --upgrade pip && \
         fastapi \
         PyYAML \
         python-dotenv \
-        pydantic && \
+        pydantic \
+        azure-cosmos>=4.5.1 \
+        azure-core \
+        azure-identity && \
     # Verify critical dependencies
     python -c "import uvicorn; print('✅ uvicorn installed')" && \
     python -c "import fastapi; print('✅ fastapi installed')" && \
     python -c "import yaml; print('✅ PyYAML installed')" && \
     python -c "import dotenv; print('✅ python-dotenv installed')" && \
-    python -c "import pydantic; print('✅ pydantic installed')"
+    python -c "import pydantic; print('✅ pydantic installed')" && \
+    python -c "import azure.cosmos; print('✅ azure-cosmos installed')" && \
+    python -c "import azure.core; print('✅ azure-core installed')" && \
+    python -c "import azure.identity; print('✅ azure-identity installed')"
 
 # Now install the rest of the requirements
 RUN pip install --no-cache-dir -r requirements.txt
