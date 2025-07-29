@@ -127,7 +127,7 @@ export default function Home() {
             </div>
             <div>
               <h1 className="text-xl font-bold text-gray-900">Ask MTO</h1>
-              <p className="text-sm text-gray-600">Ontario Driver's Licensing Assistant</p>
+              <p className="text-sm text-gray-600">Ontario Driver&apos;s Licensing Assistant</p>
             </div>
           </div>
           
@@ -207,7 +207,7 @@ export default function Home() {
             </button>
           </div>
           <p className="text-xs text-gray-500 mt-2 text-center">
-            Powered by enhanced OCR + TF-IDF analysis of the official MTO Driver's Handbook
+            Powered by enhanced OCR + TF-IDF analysis of the official MTO Driver&apos;s Handbook
           </p>
         </div>
       </div>
