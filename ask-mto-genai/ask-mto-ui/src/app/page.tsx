@@ -56,7 +56,8 @@ export default function Home() {
     setIsLoading(true)
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/ask', {
+      // Use Vercel API route instead of localhost
+      const response = await fetch('/api/ask', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -83,7 +84,7 @@ export default function Home() {
       console.error('Error:', error)
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: 'Sorry, I encountered an error. Please make sure the backend server is running and try again.',
+        text: 'Sorry, I encountered an error. Please try again in a moment.',
         isUser: false,
         timestamp: new Date()
       }
