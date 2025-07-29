@@ -225,9 +225,13 @@ async def ask_question(query: Question):
     conversation_context["last_question"] = query.question
     conversation_context["last_answer"] = answer
 
-    # 5) Store Q&A in CosmosDB
+    # 5) Store Q&A in CosmosDB (if available)
     session_id = str(uuid.uuid4())
-    store_session(session_id, query.question, answer)
+    try:
+        store_session(session_id, query.question, answer)
+    except Exception as e:
+        print(f"⚠️ Failed to store session: {e}")
+        # Continue anyway - CosmosDB storage is not critical
 
     # 6) Track performance
     duration = time.time() - start_time
