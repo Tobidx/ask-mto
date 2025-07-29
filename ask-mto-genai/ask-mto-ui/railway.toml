@@ -1,0 +1,9 @@
+[build]
+builder = "dockerfile"
+dockerfilePath = "ask-mto-genai/ask-mto-ui/Dockerfile"
+
+[deploy]
+numReplicas = 1
+healthcheckPath = "/"
+healthcheckTimeout = 300
+restartPolicyType = "never" 
