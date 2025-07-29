@@ -11,6 +11,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional, Dict, Any
+from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
@@ -45,7 +46,6 @@ async def health_check():
 print("✅ Basic FastAPI routes initialized successfully!")
 
 # Now import the complex dependencies
-from dotenv import load_dotenv
 from langchain_community.embeddings import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_openai import ChatOpenAI
