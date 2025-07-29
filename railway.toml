@@ -1,17 +1,12 @@
 [build]
-builder = "NIXPACKS"
-
-# Take full control over the Nixpacks build process
-[nixpacks]
-# Force a specific python version for consistency
-pythonVersion = "3.11"
-# Explicitly define the install command, overriding any auto-detection
-phases.install.cmds = ["pip install -r ask-mto-genai/requirements.txt"]
+# Force Railway to use our Dockerfile and stop its automatic build process.
+# This gives us 100% control over the environment.
+builder = "dockerfile"
 
 [deploy]
-startCommand = "python3 start_railway.py"
+# The start command is now handled by the CMD instruction in the Dockerfile,
+# so it is no longer needed here.
 healthcheckPath = "/"
-# Increase healthcheck timeout one last time to be safe
 healthcheckTimeout = 600
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 10 
