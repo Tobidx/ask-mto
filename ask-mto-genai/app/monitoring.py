@@ -13,10 +13,17 @@ from opencensus.ext.azure.trace_exporter import AzureExporter
 from opencensus.trace.tracer import Tracer
 from opencensus.trace import config_integration
 from opencensus.trace.samplers import ProbabilitySampler
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Azure Monitor Configuration
 AZURE_CONNECTION_STRING = os.getenv("AZURE_MONITOR_CONNECTION_STRING")
 APP_INSIGHTS_KEY = os.getenv("AZURE_APP_INSIGHTS_KEY")
+
+# Initialize as None - will be set up only if credentials are available
+tracer: Optional[Tracer] = None
 
 class AzureMonitor:
     """Simple Azure Monitor wrapper for the Ask MTO application"""
@@ -24,7 +31,6 @@ class AzureMonitor:
     def __init__(self):
         self.enabled = bool(AZURE_CONNECTION_STRING or APP_INSIGHTS_KEY)
         self.logger = None
-        self.tracer = None
         
         if self.enabled:
             self._setup_logging()
@@ -70,7 +76,8 @@ class AzureMonitor:
                 
                 # Create tracer with Azure exporter
                 exporter = AzureExporter(connection_string=AZURE_CONNECTION_STRING)
-                self.tracer = Tracer(
+                global tracer
+                tracer = Tracer(
                     exporter=exporter,
                     sampler=ProbabilitySampler(1.0)  # Sample all requests in development
                 )
