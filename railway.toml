@@ -2,11 +2,11 @@
 # Force Railway to use our Dockerfile and stop its automatic build process.
 # This gives us 100% control over the environment.
 builder = "dockerfile"
+dockerfilePath = "ask-mto-genai/Dockerfile"
 
 [deploy]
-# The start command is now handled by the CMD instruction in the Dockerfile,
-# so it is no longer needed here.
-healthcheckPath = "/"
-healthcheckTimeout = 600
-restartPolicyType = "ON_FAILURE"
+numReplicas = 1
+healthcheckPath = "/health"
+healthcheckTimeout = 300
+restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 10 
