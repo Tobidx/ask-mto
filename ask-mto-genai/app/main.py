@@ -7,20 +7,24 @@ import time
 import uuid
 import yaml
 from threading import Lock
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from typing import Optional, Dict, Any
 
-# Create FastAPI app first, before any complex imports
-app = FastAPI(title="Ask MTO API", description="Ontario MTO Driver's Handbook Assistant")
+# Load environment variables
+load_dotenv()
+
+# Initialize FastAPI app
+app = FastAPI()
 
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Temporarily allow all origins for testing
+    allow_origins=["*"],  # Allows all origins
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
 )
 
 # Simple test endpoint that should always work
@@ -29,14 +33,14 @@ async def test():
     """A simple test endpoint that should always work."""
     return {"status": "ok", "message": "Test endpoint is working!"}
 
-# Health check endpoints
+# Health check endpoint
 @app.get("/")
 async def root():
-    return {"message": "Ask MTO API is running!", "status": "healthy"}
+    return {"status": "healthy"}
 
 @app.get("/health")
 async def health_check():
-    return {"status": "healthy", "service": "ask-mto-api"}
+    return {"status": "healthy"}
 
 print("✅ Basic FastAPI routes initialized successfully!")
 
