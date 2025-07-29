@@ -1,14 +1,46 @@
+"""
+Configuration settings for the Ask MTO application.
+"""
 import os
 import re
 import time
 import uuid
 import yaml
-from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from threading import Lock
 
+# Create FastAPI app first, before any complex imports
+app = FastAPI(title="Ask MTO API", description="Ontario MTO Driver's Handbook Assistant")
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Temporarily allow all origins for testing
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Simple test endpoint that should always work
+@app.get("/test")
+async def test():
+    """A simple test endpoint that should always work."""
+    return {"status": "ok", "message": "Test endpoint is working!"}
+
+# Health check endpoints
+@app.get("/")
+async def root():
+    return {"message": "Ask MTO API is running!", "status": "healthy"}
+
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy", "service": "ask-mto-api"}
+
+print("✅ Basic FastAPI routes initialized successfully!")
+
+# Now import the complex dependencies
+from dotenv import load_dotenv
 from langchain_community.embeddings import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_openai import ChatOpenAI
@@ -17,10 +49,10 @@ from langchain_core.prompts import PromptTemplate
 
 from app.config import config
 from app.cosmosdb import store_session
-# NOTE: Removed evaluation endpoint to reduce image size
-# from app.eval_ragas import evaluate_single_qa
 from app.monitoring import track_request, track_rag_performance, log_info, log_error
 from app.semantic_kernel import enhance_answer, suggest_followups, store_conversation
+
+print("✅ All dependencies imported successfully!")
 
 # ─── Get Absolute Paths ──────────────────────────────────────────────────
 # Ensures files are found regardless of where the script is run
@@ -126,23 +158,23 @@ Please provide a comprehensive answer that includes practical advice and alterna
             raise
 
 # ─── FastAPI setup ──────────────────────────────────────────────────────────────
-app = FastAPI(title="Ask MTO API", description="Ontario MTO Driver's Handbook Assistant")
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=config.CORS_ORIGINS,
-    allow_credentials=True,
-    allow_methods=["GET", "POST"],
-    allow_headers=["*"],
-)
+# app = FastAPI(title="Ask MTO API", description="Ontario MTO Driver's Handbook Assistant")
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=config.CORS_ORIGINS,
+#     allow_credentials=True,
+#     allow_methods=["GET", "POST"],
+#     allow_headers=["*"],
+# )
 
 # Health check endpoints
-@app.get("/")
-async def root():
-    return {"message": "Ask MTO API is running!", "status": "healthy"}
+# @app.get("/")
+# async def root():
+#     return {"message": "Ask MTO API is running!", "status": "healthy"}
 
-@app.get("/health")
-async def health_check():
-    return {"status": "healthy", "service": "ask-mto-api"}
+# @app.get("/health")
+# async def health_check():
+#     return {"status": "healthy", "service": "ask-mto-api"}
 
 class Question(BaseModel):
     question: str
