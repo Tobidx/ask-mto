@@ -1,5 +1,6 @@
-# Use a slim Python base image to keep the size down
-FROM python:3.11-slim
+# Use the standard Python base image, which includes more system libraries
+# required by complex packages like faiss-cpu and numpy. This solves silent crashes.
+FROM python:3.11
 
 # Set environment variables to make Python run better in Docker
 ENV PYTHONDONTWRITEBYTECODE 1
