@@ -9,21 +9,25 @@ trigger:
   paths:
     include:
     - ask-mto-genai/*
+    - ask-mto-ui/*
     - azure-pipelines.yml
 
 variables:
-  # Build Configuration
-  pythonVersion: '3.11'
-  nodeVersion: '20.x'
-  
-  # Azure Configuration
-  azureSubscription: 'ask-mto-service-connection'
-  resourceGroupName: 'ask-mto-rg'
-  appServiceName: 'ask-mto-api'
-  frontendAppName: 'ask-mto-ui'
-  
-  # Environment Variables
-  vmImageName: 'ubuntu-latest'
+- group: ask-mto-variables
+- name: pythonVersion
+  value: '3.11'
+- name: nodeVersion
+  value: '20.x'
+- name: vmImageName
+  value: 'ubuntu-latest'
+- name: azureSubscription
+  value: 'ask-mto-service-connection'
+- name: resourceGroupName
+  value: 'ask-mto-rg'
+- name: appServiceName
+  value: 'ask-mto-api'
+- name: frontendAppName
+  value: 'ask-mto-ui'
 
 stages:
 - stage: Build
@@ -70,7 +74,7 @@ stages:
       displayName: 'Publish backend artifact'
 
   - job: BuildFrontend
-    displayName: 'Build React Frontend'
+    displayName: 'Build Next.js Frontend'
     pool:
       vmImage: $(vmImageName)
     
@@ -81,21 +85,21 @@ stages:
       displayName: 'Use Node.js $(nodeVersion)'
     
     - script: |
-        cd ask-mto-genai/ask-mto-ui
+        cd ask-mto-ui
         npm ci
       displayName: 'Install Node.js dependencies'
     
     - script: |
-        cd ask-mto-genai/ask-mto-ui
+        cd ask-mto-ui
         npm run build
-      displayName: 'Build React app'
+      displayName: 'Build Next.js app'
       env:
         CI: true
     
     - task: ArchiveFiles@2
       displayName: 'Archive frontend files'
       inputs:
-        rootFolderOrFile: 'ask-mto-genai/ask-mto-ui'
+        rootFolderOrFile: 'ask-mto-ui'
         includeRootFolder: false
         archiveType: zip
         archiveFile: $(Build.ArtifactStagingDirectory)/frontend.zip
@@ -137,6 +141,12 @@ stages:
                 -WEBSITES_PORT 8000
                 -SCM_DO_BUILD_DURING_DEPLOYMENT true
                 -ENABLE_ORYX_BUILD true
+                -OPENAI_API_KEY $(OPENAI_API_KEY)
+                -AZURE_COSMOS_CONNECTION_STRING $(AZURE_COSMOS_CONNECTION_STRING)
+                -AZURE_AI_SEARCH_SERVICE_NAME $(AZURE_AI_SEARCH_SERVICE_NAME)
+                -AZURE_AI_SEARCH_API_KEY $(AZURE_AI_SEARCH_API_KEY)
+                -AZURE_COGNITIVE_SERVICES_ENDPOINT $(AZURE_COGNITIVE_SERVICES_ENDPOINT)
+                -AZURE_COGNITIVE_SERVICES_KEY $(AZURE_COGNITIVE_SERVICES_KEY)
 
   - deployment: DeployFrontend  
     displayName: 'Deploy Frontend'
