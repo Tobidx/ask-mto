@@ -13,21 +13,35 @@ WORKDIR /app/ask-mto-genai
 # Copy only what's needed
 COPY ask-mto-genai/ .
 
-# Install dependencies with explicit commands and verification
+# Install critical dependencies first with verification
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir uvicorn fastapi && \
-    pip install --no-cache-dir -r requirements.txt && \
-    python -c "import uvicorn; print('✅ uvicorn installed successfully')" && \
-    python -c "import fastapi; print('✅ fastapi installed successfully')" && \
-    pip list | grep uvicorn && \
-    pip list | grep fastapi
+    pip install --no-cache-dir \
+        uvicorn \
+        fastapi \
+        PyYAML \
+        python-dotenv \
+        pydantic && \
+    # Verify critical dependencies
+    python -c "import uvicorn; print('✅ uvicorn installed')" && \
+    python -c "import fastapi; print('✅ fastapi installed')" && \
+    python -c "import yaml; print('✅ PyYAML installed')" && \
+    python -c "import dotenv; print('✅ python-dotenv installed')" && \
+    python -c "import pydantic; print('✅ pydantic installed')"
+
+# Now install the rest of the requirements
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Print environment info for debugging
-RUN python --version && \
-    echo "Current directory:" && pwd && \
-    echo "Directory contents:" && ls -la && \
-    echo "Python path:" && \
-    python -c "import sys; print('\n'.join(sys.path))"
+RUN echo "=== Python Environment ===" && \
+    python --version && \
+    echo "\n=== Installed Packages ===" && \
+    pip list && \
+    echo "\n=== Working Directory ===" && \
+    pwd && ls -la && \
+    echo "\n=== Python Path ===" && \
+    python -c "import sys; print('\n'.join(sys.path))" && \
+    echo "\n=== Contents of requirements.txt ===" && \
+    cat requirements.txt
 
 # The command to run when the container starts
 CMD uvicorn app.main:app --host 0.0.0.0 --port $PORT --log-level debug 

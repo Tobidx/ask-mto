@@ -1,1 +1,28 @@
- 
+# Core dependencies
+langchain
+langchain-community
+langchain-openai
+fastapi
+python-dotenv
+uvicorn
+pydantic
+faiss-cpu
+tiktoken
+PyYAML>=6.0.1  # Explicitly specify PyYAML with version
+numpy
+openai
+
+# Monitoring
+opencensus-ext-azure
+opencensus-ext-requests
+opencensus-ext-fastapi
+
+# Semantic Kernel
+semantic-kernel
+
+# Azure
+azure-search-documents
+azure-identity
+azure-ai-ml
+azure-cognitiveservices-language-textanalytics
+azure-core 
