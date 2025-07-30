@@ -1,0 +1,11 @@
+# Ignore backend files when deploying frontend
+ask-mto-genai/
+Dockerfile
+requirements.txt
+railway.toml
+
+# Ignore other unnecessary files
+.git/
+.gitignore
+README.md
+LICENSE 
