@@ -19,7 +19,7 @@ export default function Home() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: 'Hello! I\'m your MTO Assistant. Ask me anything about Ontario driver\'s licensing, including G1 and G2 requirements.',
+      text: "Hello! I'm your MTO Assistant. Ask me anything about Ontario driver's licensing, including G1 and G2 requirements.",
       isUser: false,
       timestamp: new Date()
     }
@@ -56,7 +56,6 @@ export default function Home() {
     setIsLoading(true)
 
     try {
-      // Use Railway backend URL
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://ask-mto.up.railway.app'
       const response = await fetch(`${apiUrl}/ask`, {
         method: 'POST',
@@ -212,4 +211,4 @@ export default function Home() {
       </div>
     </div>
   )
-} 
+}
