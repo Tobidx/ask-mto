@@ -1,13 +1,8 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  // Configure environment variables
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   env: {
-    // Railway backend URL - updated to new custom domain
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || 'https://ask-mto.up.railway.app',
   },
-
-  // CORS and security settings
   async headers() {
     return [
       {
@@ -22,4 +17,4 @@ const nextConfig: NextConfig = {
   }
 };
 
-export default nextConfig; 
+module.exports = nextConfig; 
