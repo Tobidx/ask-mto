@@ -2,7 +2,7 @@
 # Force Railway to use our Dockerfile and stop its automatic build process.
 # This gives us 100% control over the environment.
 builder = "dockerfile"
-dockerfilePath = "ask-mto-genai/Dockerfile"
+dockerfilePath = "apps/backend/Dockerfile"
 
 [deploy]
 numReplicas = 1

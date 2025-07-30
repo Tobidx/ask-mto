@@ -13,13 +13,13 @@ RUN apt-get update && \
 WORKDIR /app
 
 # Copy requirements first to leverage Docker cache
-COPY ask-mto-genai/requirements.txt .
+COPY apps/backend/requirements.txt .
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application
-COPY ask-mto-genai/ .
+COPY apps/backend/ .
 
 # Set Python path
 ENV PYTHONPATH=/app
