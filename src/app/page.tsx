@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 
 interface Message {
   id: string
@@ -57,7 +57,7 @@ export default function Home() {
 
     try {
       // Use Railway backend URL
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://ask-mto.up.railway.app'
       const response = await fetch(`${apiUrl}/ask`, {
         method: 'POST',
         headers: {
@@ -131,8 +131,6 @@ export default function Home() {
               <p className="text-sm text-gray-600">Ontario Driver&apos;s Licensing Assistant</p>
             </div>
           </div>
-          
-
         </div>
       </header>
 
