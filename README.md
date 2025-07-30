@@ -12,13 +12,13 @@
 
 ## 🎯 What is Ask MTO?
 
-**Ask MTO** is an intelligent chatbot that provides instant, accurate answers about Ontario driving rules using advanced **Retrieval-Augmented Generation (RAG)** technology. Instead of manually searching through the 200+ page MTO Driver's Handbook, simply ask your question in plain English and get precise answers with source references.
+**Ask MTO** is an intelligent chatbot that provides instant, accurate answers about Ontario driving rules using advanced **Retrieval-Augmented Generation (RAG)** technology. Instead of manually searching through the 200+ page MTO Driver's Handbook, simply ask your question in plain English and get precise answers.
 
 ### 🧠 **How It Works**
 1. **Enhanced Document Processing**: Uses OCR + TF-IDF analysis to extract and organize the MTO handbook content
 2. **Semantic Search**: FAISS vector database enables lightning-fast similarity search through 72 smart chunks
 3. **AI Generation**: OpenAI GPT generates natural, helpful answers based on the retrieved content
-4. **Source References**: Every answer includes exact references to the handbook sections
+
 
 ### 💡 **Perfect For**
 - **New Drivers**: G1/G2 license requirements and rules
@@ -30,8 +30,8 @@
 
 ## ✨ **Live Demo**
 
-🚀 **Try it now**: [Your Railway Frontend URL]
-📚 **API Docs**: [Your Railway Backend URL]/docs
+🚀 **Try it now**: https://mto-ai.up.railway.app/
+📚 **API Docs**: https://ask-mto.up.railway.app/docs
 
 ### **Example Questions**
 - "What is a G1 license and how do I get one?"
@@ -117,7 +117,7 @@ ask-mto/
 ## 🚀 **Quick Start**
 
 ### **🌐 Option 1: Use the Live Version**
-Just visit [Your Railway Frontend URL] - no setup required!
+Just visit https://mto-ai.up.railway.app/ - no setup required!
 
 ### **💻 Option 2: Local Development**
 
@@ -250,53 +250,7 @@ The project includes Railway configuration:
 
 ---
 
-## 📊 **API Documentation**
 
-### **Core Endpoints**
-
-#### **💬 Ask Question**
-```http
-POST /ask
-Content-Type: application/json
-
-{
-  "question": "How do I get my G1 license?"
-}
-```
-
-**Response:**
-```json
-{
-  "answer": "To get your G1 license, you must be at least 16 years old, pass a vision test, and pass a knowledge test...",
-  "sources": [
-    "You need a Class G licence to drive a car, van or small truck...",
-    "To apply for a licence, you must be at least 16 years old..."
-  ]
-}
-```
-
-#### **🧠 Enhanced AI Response**
-```http
-POST /ask-enhanced
-```
-Includes AI orchestration, follow-up suggestions, and enhanced context.
-
-#### **🔄 Clear Context**
-```http
-POST /clear-context
-```
-Resets conversation history for fresh start.
-
-#### **❤️ Health Check**
-```http
-GET /health
-GET /
-```
-
-### **Interactive API Docs**
-Visit `/docs` on your backend URL for complete Swagger documentation.
-
----
 
 ## 🧪 **Testing & Quality**
 
@@ -313,12 +267,6 @@ curl -X POST "http://localhost:8000/ask-enhanced" \
   -d '{"question": "What are the G2 license restrictions?"}'
 ```
 
-### **Quality Metrics**
-The system includes built-in quality monitoring:
-- **Source Relevancy**: How well retrieved content matches the question
-- **Answer Accuracy**: Based on official MTO handbook content only
-- **Context Preservation**: Maintains conversation flow
-- **Response Time**: Optimized for sub-2 second responses
 
 ---
 
@@ -347,20 +295,6 @@ When the MTO handbook is updated:
 
 ---
 
-## 🔒 **Privacy & Security**
-
-### **🛡️ Privacy**
-- **No personal data collection**
-- **No user tracking**
-- **Local conversation history only**
-- **Anonymous usage metrics only**
-
-### **🔐 Security**
-- **Input validation** on all endpoints
-- **Rate limiting** to prevent abuse
-- **CORS protection** for safe cross-origin requests
-- **Environment variable** protection
-- **HTTPS** in production
 
 ### **📚 Data Sources**
 - **Official MTO content only** - no external or unofficial sources
@@ -369,14 +303,6 @@ When the MTO handbook is updated:
 
 ---
 
-## 🤝 **Contributing**
-
-We welcome contributions! Here's how:
-
-### **🐛 Reporting Issues**
-1. Check [existing issues](https://github.com/Tobidx/ask-mto/issues)
-2. Create detailed bug reports with reproduction steps
-3. Suggest improvements with specific use cases
 
 ### **💻 Code Contributions**
 1. Fork the repository
@@ -393,42 +319,6 @@ We welcome contributions! Here's how:
 
 ---
 
-## 🆘 **Support & Troubleshooting**
-
-### **Common Issues**
-
-**1. "Module not found" errors:**
-```bash
-# Ensure you're in the right directory
-cd ask-mto/apps/backend
-pip install -r requirements.txt
-```
-
-**2. OpenAI API errors:**
-```bash
-# Check your API key
-echo $OPENAI_API_KEY
-# Set it properly
-export OPENAI_API_KEY="your-key-here"
-```
-
-**3. CORS errors:**
-- Check `CORS_ORIGINS` in `apps/backend/app/config.py`
-- Ensure frontend URL is included
-
-**4. Vectorstore errors:**
-```bash
-# Rebuild if corrupted
-cd apps/backend
-python scripts/rebuild_vectorstore_ocr_tfidf.py
-```
-
-### **🆘 Getting Help**
-- **Bug Reports**: [GitHub Issues](https://github.com/Tobidx/ask-mto/issues)
-- **Questions**: [GitHub Discussions](https://github.com/Tobidx/ask-mto/discussions)
-- **Feature Requests**: Create an issue with the "enhancement" label
-
----
 
 ## 📄 **License**
 
@@ -462,12 +352,6 @@ This is an independent educational tool using publicly available materials.
 
 ---
 
-## 🔗 **Links**
-
-### **🏠 Project**
-- **Repository**: [https://github.com/Tobidx/ask-mto](https://github.com/Tobidx/ask-mto)
-- **Issues**: [GitHub Issues](https://github.com/Tobidx/ask-mto/issues)
-- **Live Demo**: [Your Railway URL]
 
 ### **📚 Official Resources**
 - **MTO Driver's Handbook**: [ontario.ca/document/official-mto-drivers-handbook](https://www.ontario.ca/document/official-mto-drivers-handbook)
@@ -481,27 +365,6 @@ This is an independent educational tool using publicly available materials.
 
 ---
 
-## 🙏 **Acknowledgments**
-
-### **Built With**
-- **Ontario Ministry of Transportation** - Official handbook content
-- **OpenAI** - Advanced language models  
-- **Railway** - Modern deployment platform
-- **Open Source Community** - Amazing tools and libraries
-
-### **Technology Credits**
-- **Python & FastAPI** - Backend framework
-- **React & Next.js** - Frontend framework  
-- **LangChain** - RAG pipeline
-- **FAISS** - Vector similarity search
-- **OpenAI GPT** - Language understanding
-- **Tailwind CSS** - UI styling
-
----
-
-## 🌟 **Star History**
-
-If this project helps you learn Ontario driving rules, please ⭐ it on GitHub!
 
 ---
 
